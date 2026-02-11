@@ -710,6 +710,23 @@
   const dlgNext = document.querySelector("[data-lightbox-next]");
   let lightboxItems = [];
   let lightboxIndex = 0;
+  let lightboxScrollPos = null;
+
+  const rememberScrollPos = () => {
+    lightboxScrollPos = {
+      x: window.scrollX || window.pageXOffset || 0,
+      y: window.scrollY || window.pageYOffset || 0
+    };
+  };
+
+  const restoreScrollPos = () => {
+    if (!lightboxScrollPos) return;
+    const { x, y } = lightboxScrollPos;
+    lightboxScrollPos = null;
+    requestAnimationFrame(() => {
+      window.scrollTo({ left: x, top: y, behavior: "auto" });
+    });
+  };
 
   const setLightboxSlide = (index) => {
     if (!dlgImg || !dlgCap || !lightboxItems.length) return;
@@ -743,14 +760,18 @@
       lightboxItems = [{ src, cap, alt: cap || "Imagem" }];
       setLightboxSlide(0);
     }
+    rememberScrollPos();
     if (typeof dlg.showModal === "function") dlg.showModal();
     else dlg.setAttribute("open", "");
   };
 
   const closeLightbox = () => {
     if (!dlg) return;
-    if (typeof dlg.close === "function") dlg.close();
-    else dlg.removeAttribute("open");
+    if (dlg.hasAttribute("open")) {
+      if (typeof dlg.close === "function") dlg.close();
+      else dlg.removeAttribute("open");
+      restoreScrollPos();
+    }
     lightboxItems = [];
     lightboxIndex = 0;
   };
