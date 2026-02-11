@@ -1,0 +1,58 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Configuração • Perfeita Luz</title>
+  <meta name="description" content="Painel de configuração para editar textos e imagens do site Perfeita Luz." />
+  <meta name="theme-color" content="#373A36" />
+  <link rel="stylesheet" href="config.css" />
+  <link rel="icon" href="assets/favicon.svg" />
+</head>
+<body>
+  <header class="admin-header">
+    <div class="container header__inner">
+      <div class="admin-brand">
+        <img src="assets/brand/logo.png" alt="Perfeita Luz" width="140" height="46" />
+        <div>
+          <strong>Configuração do site</strong>
+          <span>Edite textos e imagens com base no manual de marca.</span>
+        </div>
+      </div>
+
+      <div class="admin-actions">
+        <button class="btn btn--gold" type="button" data-action="save">Salvar alterações</button>
+        <button class="btn btn--ghost" type="button" data-action="export">Exportar JSON</button>
+        <label class="btn btn--ghost admin-file">
+          Importar JSON
+          <input type="file" accept="application/json" data-action="import" hidden />
+        </label>
+        <a class="btn" href="index.html" target="_blank" rel="noreferrer">Abrir site</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-main">
+    <section class="admin-intro">
+      <h1>Personalize a Perfeita Luz</h1>
+      <p>
+        Faça upload das imagens, ajuste títulos, descrições e chamadas. Ao salvar, selecione o arquivo
+        <code>site-config.json</code> para gravar as alterações no config do projeto.
+      </p>
+      <div class="admin-hint">
+        <strong>Importante:</strong> para publicar, substitua também os arquivos em <code>assets/img</code>.
+      </div>
+    </section>
+
+    <div class="admin-workspace">
+      <aside class="admin-sidebar" data-config-nav aria-label="Navegação do painel"></aside>
+      <div class="admin-sections" data-config-container></div>
+    </div>
+  </main>
+
+  <div class="admin-toast" data-toast role="status" aria-live="polite"></div>
+
+  <script src="site-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
