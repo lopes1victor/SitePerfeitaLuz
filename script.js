@@ -52,6 +52,45 @@
     if (link.href) el.setAttribute("href", link.href);
   };
 
+  const SECTION_ORDER_MAP = {
+    about: "sobre",
+    services: "curadoria",
+    collections: "colecoes",
+    projects: "projetos",
+    media: "midia",
+    showroom: "showroom"
+  };
+  const SECTION_ORDER_KEYS = Object.keys(SECTION_ORDER_MAP);
+
+  const normalizeSectionOrder = (order) => {
+    const source = Array.isArray(order) ? order : [];
+    const normalized = [];
+    source.forEach((key) => {
+      if (!SECTION_ORDER_KEYS.includes(key)) return;
+      if (normalized.includes(key)) return;
+      normalized.push(key);
+    });
+    SECTION_ORDER_KEYS.forEach((key) => {
+      if (!normalized.includes(key)) normalized.push(key);
+    });
+    return normalized;
+  };
+
+  const applySectionOrder = () => {
+    const main = document.querySelector("main#conteudo");
+    if (!main) return;
+    const footer = main.querySelector("footer.footer");
+    const order = normalizeSectionOrder(config.sectionOrder);
+    config.sectionOrder = order;
+    order.forEach((key) => {
+      const sectionId = SECTION_ORDER_MAP[key];
+      if (!sectionId) return;
+      const section = document.getElementById(sectionId);
+      if (!section || section.parentElement !== main) return;
+      main.insertBefore(section, footer || null);
+    });
+  };
+
   let aboutCycleTimer = null;
 
   const renderStats = (selector, items) => {
@@ -655,6 +694,7 @@
   applyShowroom();
   applyContact();
   applyFooter();
+  applySectionOrder();
   finishConfigBoot();
 
   const year = document.getElementById("year");

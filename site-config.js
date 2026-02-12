@@ -30,6 +30,14 @@
       ctaHref: "#contato",
       instagram: "https://instagram.com/perfeitaluziluminacao"
     },
+    sectionOrder: [
+      "about",
+      "services",
+      "collections",
+      "projects",
+      "media",
+      "showroom"
+    ],
     hero: {
       eyebrow: "Design que ilumina",
       title: "Iluminação premium para projetos que pedem presença.",

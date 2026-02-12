@@ -1,18 +1,4 @@
-﻿@font-face {
-  font-family: "Clash Display";
-  src: url("assets/fonts/ClashDisplay-Variable.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 200 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Chillax";
-  src: url("assets/fonts/Chillax-Variable.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-}
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap");
 
 :root {
   --bg: #373A36;
@@ -32,8 +18,8 @@
 
   --container: 1160px;
 
-  --title: "Clash Display", "Sora", "Poppins", "Segoe UI", sans-serif;
-  --text: "Chillax", "Manrope", "Sora", "Segoe UI", sans-serif;
+  --title: "Cormorant Garamond", "Times New Roman", serif;
+  --text: "Manrope", "Segoe UI", sans-serif;
 }
 
 * {
@@ -51,7 +37,7 @@ body {
   color: var(--ink);
   font-family: var(--text);
   line-height: 1.6;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.12px;
   overflow-x: hidden;
   transition: opacity 0.2s ease;
 }
@@ -157,6 +143,8 @@ button {
 
 .nav__link {
   font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   padding: 0.55rem 0.75rem;
   border-radius: 999px;
   color: rgba(217, 217, 214, 0.86);
@@ -222,6 +210,7 @@ button {
   background: rgba(217, 217, 214, 0.08);
   color: rgba(217, 217, 214, 0.95);
   cursor: pointer;
+  font-weight: 500;
   transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
@@ -363,8 +352,8 @@ button {
 
 .hero__title {
   font-family: var(--title);
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   font-size: clamp(2.4rem, 4.4vw, 3.8rem);
   line-height: 1.05;
   margin: 0.6rem 0 0.8rem;
@@ -471,8 +460,9 @@ button {
 
 .section__head h2 {
   font-family: var(--title);
+  font-weight: 500;
   font-size: clamp(1.8rem, 2.8vw, 2.5rem);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin: 0 0 0.6rem;
 }
 
@@ -585,6 +575,7 @@ button {
 .service-card h3 {
   margin: 0 0 0.45rem;
   font-family: var(--title);
+  font-weight: 500;
   letter-spacing: -0.01em;
 }
 
@@ -605,6 +596,7 @@ button {
 
 .process__head h3 {
   font-family: var(--title);
+  font-weight: 500;
   font-size: clamp(1.5rem, 2.3vw, 2rem);
   letter-spacing: -0.02em;
   margin: 0 0 0.6rem;
@@ -805,6 +797,7 @@ button {
 .project-card__body h3 {
   margin: 0 0 0.35rem;
   font-family: var(--title);
+  font-weight: 500;
   letter-spacing: -0.01em;
 }
 
@@ -862,6 +855,7 @@ button {
 .media__copy h3 {
   margin: 0 0 0.8rem;
   font-family: var(--title);
+  font-weight: 500;
   font-size: clamp(1.4rem, 2.6vw, 2.2rem);
 }
 
@@ -927,6 +921,7 @@ button {
 .media-card__body h4 {
   margin: 0;
   font-family: var(--title);
+  font-weight: 500;
   font-size: 1.05rem;
 }
 

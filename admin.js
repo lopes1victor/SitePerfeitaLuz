@@ -9,6 +9,15 @@
   const container = document.querySelector("[data-config-container]");
   const toast = document.querySelector("[data-toast]");
   let navObserver = null;
+  const SECTION_ORDER_ITEMS = [
+    { key: "about", label: "Sobre" },
+    { key: "services", label: "Curadoria" },
+    { key: "collections", label: "Coleções" },
+    { key: "projects", label: "Projetos" },
+    { key: "media", label: "Na mídia" },
+    { key: "showroom", label: "Showroom e contato" }
+  ];
+  const SECTION_ORDER_KEYS = SECTION_ORDER_ITEMS.map((item) => item.key);
 
   const showToast = (message) => {
     if (!toast) return;
@@ -389,6 +398,20 @@
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
+  const normalizeSectionOrder = (order) => {
+    const incoming = Array.isArray(order) ? order : [];
+    const normalized = [];
+    incoming.forEach((key) => {
+      if (!SECTION_ORDER_KEYS.includes(key)) return;
+      if (normalized.includes(key)) return;
+      normalized.push(key);
+    });
+    SECTION_ORDER_KEYS.forEach((key) => {
+      if (!normalized.includes(key)) normalized.push(key);
+    });
+    return normalized;
+  };
+
   const buildSidebarNav = () => {
     if (!nav || !container) return;
     nav.innerHTML = "";
@@ -493,6 +516,7 @@
   const build = () => {
     if (!container) return;
     container.innerHTML = "";
+    config.sectionOrder = normalizeSectionOrder(config.sectionOrder);
 
     const meta = createSection("Meta e SEO", "Ajuste o título, descrições e imagem de compartilhamento.");
     addFields(meta, [
@@ -515,6 +539,73 @@
       createField({ label: "Instagram", path: "header.instagram" })
     ]);
     container.appendChild(header);
+
+    const sectionOrder = createSection(
+      "Ordem das seções",
+      "Defina a sequência das seções exibidas no site (logo abaixo da Hero)."
+    );
+    const sectionOrderList = document.createElement("div");
+    sectionOrderList.className = "section-order";
+
+    config.sectionOrder.forEach((key, index) => {
+      const item = SECTION_ORDER_ITEMS.find((entry) => entry.key === key);
+      if (!item) return;
+
+      const row = document.createElement("div");
+      row.className = "section-order__item";
+
+      const label = document.createElement("strong");
+      label.textContent = `${index + 1}. ${item.label}`;
+
+      const actions = document.createElement("div");
+      actions.className = "section-order__actions";
+
+      const upBtn = document.createElement("button");
+      upBtn.type = "button";
+      upBtn.className = "btn btn--ghost section-order__btn";
+      upBtn.textContent = "Subir";
+      upBtn.disabled = index === 0;
+      upBtn.addEventListener("click", () => {
+        const order = normalizeSectionOrder(config.sectionOrder);
+        if (index <= 0) return;
+        const moved = order[index];
+        order[index] = order[index - 1];
+        order[index - 1] = moved;
+        config.sectionOrder = order;
+        build();
+        showToast("Ordem atualizada.");
+      });
+
+      const downBtn = document.createElement("button");
+      downBtn.type = "button";
+      downBtn.className = "btn btn--ghost section-order__btn";
+      downBtn.textContent = "Descer";
+      downBtn.disabled = index === config.sectionOrder.length - 1;
+      downBtn.addEventListener("click", () => {
+        const order = normalizeSectionOrder(config.sectionOrder);
+        if (index >= order.length - 1) return;
+        const moved = order[index];
+        order[index] = order[index + 1];
+        order[index + 1] = moved;
+        config.sectionOrder = order;
+        build();
+        showToast("Ordem atualizada.");
+      });
+
+      actions.appendChild(upBtn);
+      actions.appendChild(downBtn);
+      row.appendChild(label);
+      row.appendChild(actions);
+      sectionOrderList.appendChild(row);
+    });
+
+    sectionOrder.appendChild(sectionOrderList);
+    const sectionOrderHint = document.createElement("div");
+    sectionOrderHint.className = "field__hint";
+    sectionOrderHint.textContent =
+      "Exemplo: mova Coleções para cima para deixá-la logo abaixo de Sobre.";
+    sectionOrder.appendChild(sectionOrderHint);
+    container.appendChild(sectionOrder);
 
     const hero = createSection("Hero", "Texto principal e imagem de impacto.");
     addFields(hero, [
